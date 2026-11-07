@@ -109,7 +109,7 @@ lake build Definitions Theorems Solutions Audits Proofs
 lake env lean scripts/ClassicalAudit.lean
 ```
 
-On 2026-11-07 this build passed (180 jobs). The only `sorry`s are in the 41 statement files in `Theorems/`: 34 open targets, plus the 7 BBS2002 statements whose proofs are in `Solutions/`.
+On 2026-11-07 this build passed (180 jobs). The only `sorry`s are in the 41 statement files in `Theorems/`. Of these, 30 are open targets; the 4 Schwichtenberg 1976 statements are proved in `Proofs/`, and the 7 BBS2002 statements in `Solutions/`.
 
 As on prove2.me, a proof may cite another target by importing its statement from `Theorems/`. The axioms of each `solution` are:
 
