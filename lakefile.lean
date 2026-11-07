@@ -17,3 +17,5 @@ lean_lib «Solutions» where
   globs := #[.submodules `Solutions]
 lean_lib «Audits» where
   globs := #[.submodules `Audits]
+lean_lib «Proofs» where
+  globs := #[.submodules `Proofs]
