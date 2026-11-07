@@ -10,6 +10,22 @@ namespace Schwichtenberg1976V2.Proofs
 
 open Schwichtenberg1976V2
 
+/-! ## Constructive list facts
+
+Core's `List.eq_nil_iff_forall_not_mem` is proved classically, so we use our own version. -/
+
+theorem eq_nil_of_forall_not_mem {α : Type} {l : List α} (h : ∀ x, x ∉ l) : l = [] := by
+  cases l with
+  | nil => rfl
+  | cons a l => exact absurd (List.mem_cons_self ..) (h a)
+
+/-- Every term is an abstraction or is not, decided by its head constructor. -/
+theorem lam_or_not (s : Term) : (∃ x c, s = .lam x c) ∨ (∀ x c, s ≠ .lam x c) := by
+  cases s with
+  | lam x c => exact Or.inl ⟨x, c, rfl⟩
+  | var v => exact Or.inr fun _ _ h => Term.noConfusion h
+  | app p q => exact Or.inr fun _ _ h => Term.noConfusion h
+
 /-! ## Free variables -/
 
 theorem mem_eraseDupsBy_loop (v : Var) (as : List Var) :

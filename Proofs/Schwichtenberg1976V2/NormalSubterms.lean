@@ -214,27 +214,25 @@ theorem normal_subterm_structure
   refine ⟨?_, ?_, ?_⟩
   · intro s τ hs hty
     have hg := hsub s τ hs hty
-    by_cases hlam : ∃ x c, s = .lam x c
+    rcases lam_or_not s with hlam | hlam
     · rcases hg.2.2.2 with h | h | h
       · exact Or.inl h
       · exact Or.inr (Or.inl h)
       · obtain ⟨x, c, rfl⟩ := hlam
         exact absurd rfl (h x c)
-    · have hlam : ∀ x c, s ≠ .lam x c := fun x c h => hlam ⟨x, c, h⟩
-      rcases neutral_shape hFs hα s τ hg.1 hlam hty hg.2.2.1 with ⟨h, _⟩ | h | h
+    · rcases neutral_shape hFs hα s τ hg.1 hlam hty hg.2.2.1 with ⟨h, _⟩ | h | h
       · exact Or.inr (Or.inr h)
       · exact Or.inr (Or.inl h)
       · exact Or.inl h
   · intro s hs hty
     have hg := hsub s _ hs hty
-    by_cases hlam : ∃ x c, s = .lam x c
+    rcases lam_or_not s with hlam | hlam
     · rcases hg.2.2.2 with h | h | h
       · exact absurd h ty_nu_ne_zero
       · exact absurd h ty_nu_ne_endo
       · obtain ⟨x, c, rfl⟩ := hlam
         exact absurd rfl (h x c)
-    · have hlam : ∀ x c, s ≠ .lam x c := fun x c h => hlam ⟨x, c, h⟩
-      rcases neutral_shape hFs hα s _ hg.1 hlam hty hg.2.2.1 with ⟨_, h⟩ | h | h
+    · rcases neutral_shape hFs hα s _ hg.1 hlam hty hg.2.2.1 with ⟨_, h⟩ | h | h
       · exact h
       · exact absurd h ty_nu_ne_endo
       · exact absurd h ty_nu_ne_zero

@@ -152,8 +152,8 @@ theorem churchNumeral_eq (n : Nat) :
     churchNumeral n = .lam numα (.lam numx (iterApp (.var numα) (.var numx) n)) := rfl
 
 theorem fvo_churchNumeral (n : Nat) : freeVarOccurrences (churchNumeral n) = [] := by
-  rw [churchNumeral_eq, List.eq_nil_iff_forall_not_mem]
-  intro v hv
+  rw [churchNumeral_eq]
+  refine eq_nil_of_forall_not_mem fun v hv => ?_
   simp only [mem_fvo_lam, mem_fvo_iterApp, mem_fvo_var] at hv
   obtain ⟨⟨h | h, hx⟩, hα⟩ := hv
   · exact hα h.2
