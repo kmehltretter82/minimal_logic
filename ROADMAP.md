@@ -10,7 +10,7 @@ Minimal logic is the base layer for this. It has implication, conjunction and âˆ
 
 ## Principles
 
-- **Constructive proofs.** Every proof uses at most `propext` and `Quot.sound`, never `Classical.choice`. `scripts/ClassicalAudit.lean` checks this.
+- **Constructive proofs.** Every proof uses at most `propext` and `Quot.sound`, never `Classical.choice`. `scripts/ClassicalAudit.lean` checks this. The one exception is the BBS2002 proofs, which were accepted on prove2.me before this rule and stay classical.
 - **Finish here, then publish.** A formalization goes to prove2.me for public review only after it has been checked against the paper and fully proved in this repository.
 - **Faithful to the source.** Every formal statement is checked against the paper. Wherever the formalization departs from the paper, the departure is written down.
 - **Honest status.** Known false statements stay visible and labelled until they are repaired.
@@ -125,7 +125,7 @@ These limits are why the plan aims at specific, well-chosen classes of proofs, w
 1. Package the 1976 proofs as single-file prove2.me solutions, ready for when its review completes.
 2. Repair Aehlig & Schwichtenberg 2002. This is the first step of P2.
 3. Repair ABHS 2004 (P2), Berger & Schwichtenberg 1991 (P3), and BNS 2000 (P2).
-4. Decide whether to make the BBS2002 proofs constructive. They currently use `Classical.choice`.
+4. The BBS2002 proofs stay classical: they use `Classical.choice` and are already accepted on prove2.me (decided 2026-11-07).
 
 ### Phase 1: the minimal logic core
 
