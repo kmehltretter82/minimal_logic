@@ -1,0 +1,95 @@
+Higher Type Recursion, Ramification and Polynomial Time — submission audit
+Audit date: 2026-11-02
+Proposal: d6a320af-caf0-4032-a7cc-7d494a9539b2
+Snapshot: proposal-before-review.json (unchanged; digest in snapshot.sha256)
+Verdict: Do not resubmit unchanged. There is a kernel-checked false theorem, a kernel-checked failure of the purported term equivalence relation, missing complexity content in two central milestones, and stale published descriptions.
+
+PRIMARY SOURCE AND COVERAGE
+Author-hosted final preprint:
+https://www.mathematik.uni-muenchen.de/~schwicht/papers/bns99/bnsfin2.ps
+Linked by the author's publication list as the final Annals of Pure and Applied Logic version:
+https://www.math.lmu.de/~schwicht/publikationen.html
+Published article DOI: https://doi.org/10.1016/S0168-0072(00)00006-3
+Local source.ps, converted source.pdf, and source.txt were consulted. Page references below are the preprint's printed pages, not the published pagination. Read all mathematical sections, 2–5, and all nine uploaded modules (two definition modules and seven theorem targets), including the associated published descriptions/readbacks.
+
+SOURCE CHECKPOINTS
+Section 2, preprint p. 3, allows both ordinary application and kappa elimination in elimination spines and treats terms as having unique normal forms. Section 4, p. 8, Theorem 4.3 gives an evaluator for every ground R-free RS term. Its Theorem 4.5 controls the resources used to construct the R-free representative. Section 5, pp. 10–11, includes that construction cost in the final normalization bound. These are the source features at issue below.
+
+FINDING H1 — BLOCKING: THEOREM 4.3 / COROLLARY 4.4 IS FALSE
+Target: BNS2000.theorem_4_3_and_4_4
+Published theorem ID: 5e24e9ec-f0f3-47bf-a0d2-46a45e19ddf5
+Theorem code: code/04_BNS2000_theorem_4_3_and_4_4.lean:15
+Defective dependency: code/01_BNS2000_Terms.lean:316 (also 325, 339, 352)
+
+The evaluator represents the trailing elimination spine with rs : List Term and Term.appMany. This permits ordinary term arguments only; it cannot represent a trailing kappa. In particular, take
+  bad := kappa (kappa (bang (bang (const zero))))
+which is the source notation (!!0) kappa kappa.
+This is a closed, R-free RS term of ground type iota. It reduces to zero by two contextual reduction steps. Nevertheless it has NO NFEval derivation, for any output, environment, step count, register count, or maximum length. The variable-kappa rule only starts from a variable. The bang-kappa rule requires an immediate kappa(bang s) followed by ordinary applications. Neither applies to bad, whose outer kappa contains another kappa.
+
+Counterexample.lean proves bad_RS, bad_typed, bad_reduces_zero, and bad_no_eval. It repeats the exact submitted theorem type in Submitted4_3and4_4 and proves its negation in refute_submitted_4_3_and_4_4 (line 136). It imports only the definition modules, not the open target theorem. Kernel axioms reported: propext and Quot.sound; no sorry, custom axiom, or native_decide.
+
+Fix: represent elimination spines by a datatype including both term arguments and kappa, or supply complete operational rules for kappa over all possible heads, with revised resource accounting. Retain this example as a regression obligation and prove evaluator completeness for the actual RS grammar before restating the bound. A cosmetic change to the theorem description cannot fix it.
+
+FINDING H2 — BLOCKING FOUNDATION: TermEquiv IS NOT TRANSITIVE
+Definition ID: 524b25b3-0657-4c05-9ec3-3206a0778e9e (BNS2000_Syntax)
+Code: code/00_BNS2000_Syntax.lean:263 (substitution), :439 (TermEquiv)
+Affected users include Theorem 4.5 and Theorem 5.1.
+
+The syntax uses raw named binders, capture-avoiding substitution chooses a fresh numeric identifier from the current syntax, and TermEquiv requires a literally identical common normal form. There is no alpha-equivalence quotient, canonicalization, or renaming conversion. Reduction order therefore changes the chosen binder names.
+
+Concrete well-typed example, with x=id1, y=id0, z=id10, all of type iota:
+  (lambda x. lambda y. x) ((lambda z. y) 0).
+Outer beta first yields the normal form lambda id11. y.
+Inner beta first yields the normal form lambda id2. y.
+The two normal forms are alpha-equivalent but are unequal Lean Term values and cannot reduce further. Consequently TermEquiv relates the first normal form to the source and the source to the second normal form, but fails to relate the two normal forms.
+
+Counterexample.lean proves two_distinct_normal_forms and equivalence_not_transitive, using only the definition modules and axioms propext and Quot.sound. These are actual proofs, not evaluations over a sample. This finding does not by itself refute every theorem mentioning TermEquiv; it shows the foundational object does not provide the equivalence/unique-normal-form semantics used in the paper.
+
+Fix: use de Bruijn or locally nameless syntax, or define and respect alpha equivalence throughout substitution, reduction, normalization, affination, sharing, and term equivalence. Merely adding an alpha clause to the current relation needs a full coherence audit of those dependent definitions. New definitions and downstream theorem items are required.
+
+FINDING H3 — HIGH: THEOREMS 4.5 AND 5.1 OMIT THE CONSTRUCTION COST
+Targets:
+  BNS2000.theorem_4_5 — 5eb076ec-d2e4-4bc5-9e1f-e3de47f2bb7e
+  BNS2000.theorem_5_1 — 6697cd6f-3349-437a-a835-5aded351f76f
+Code: code/05_BNS2000_theorem_4_5.lean:12 and code/06_BNS2000_theorem_5_1.lean:19
+
+Theorem 4.5 only says an equivalent R-free term exists with polynomial length. No elimination execution or its cost appears. Theorem 5.1 existentially selects an equivalent R-free term u and bounds NFEval applied to u; it never bounds the cost of obtaining u from the original term and numeric inputs. ReducesTo/TermEquiv do not carry a step bound.
+
+Thus an arbitrarily expensive computation may be hidden in the choice of u. Choosing u to be the already-computed output numeral illustrates why cheaply evaluating u is insufficient to bound the computation of the original input. The statements may be true consequences, but they are weaker than the claimed polynomial-time normalization results. This is not a false-theorem claim.
+
+Fix: add a costed recursor-elimination relation or an actual program and a simulation theorem, then include construction plus evaluation costs in the final bound. The current algebraic RA iff BC goal is a separate possible mission endpoint, but its existence does not repair these advertised complexity milestones. If polynomial time is defined through BC, say so explicitly and add a formal machine-time bridge if the mission claims one.
+
+FINDING H4 — MEDIUM: PUBLISHED METADATA DESCRIBES DIFFERENT CONTENT
+The proposal's item descriptions and milestone fields are inconsistent with their current Lean code.
+- BNS2000.theorem_3_1 (af34efec-8aba-46ba-b515-02995cb6922d): published description/milestone says first-order polynomial normalization and BC membership; the actual theorem is closure of RA under reduction plus preservation of affinability in normal forms. Those are different results.
+- BNS2000.theorem_5_2 (87f0a9b2-d444-41e1-8b7e-63b50aab8479): title, description, and milestone promise representation by both RA and RS. The statement only asserts RADenotesTwoSorted, containing IsRATerm and no IsRSTerm.
+- BNS2000.ptime_characterization (a39da23f-86c2-4263-9f64-dfc11038dbe0): description promises a three-way RA/RS/PTIME result; the formula is only RA representation iff BC representation. It has no RS side and no cost bound.
+- BNS2000_Syntax and BNS2000_Terms descriptions mention absent or differently located identifiers (e.g. iota_j, IsPolyBound, isSafeIn, isCompleteIn, IsAffinableIn); actual code uses iota/bang, IsAffination, ScopeEquivalentIn, etc.
+- Theorem 4.3's published description drops the +env.length register allowance present in its general formal statement.
+
+Fix published descriptions, milestone text, and readbacks against the replacement source. Existing readbacks are useful literal summaries in places, but did not catch H1/H2 and are not correctness certificates.
+
+ITEM-BY-ITEM DISPOSITION
+1. BNS2000_Syntax — 524b25b3-0657-4c05-9ec3-3206a0778e9e.
+   Reviewed full 507 lines. Types/constants/numerals and computational reductions generally follow the source; H2 blocks treating the normal-form equivalence infrastructure as faithful. Metadata stale.
+2. BNS2000_Terms — 02e9f80a-7062-4b5e-ad64-3827cc010519.
+   Reviewed full 438 lines. H1 in evaluator; also needs alpha/hygiene reconciliation inherited from H2. BC safe recursion has correct predecessor-of-current argument and appends the previous result after safe inputs. No circular field assumes the main theorem.
+3. theorem_3_1 — af34efec-8aba-46ba-b515-02995cb6922d.
+   Lean statement matches closure/preservation structure of source Theorem 3.1. No independent disproof found. Published description is wrong; it requires reassessment after changing the foundations.
+4. lemma_4_1_and_4_2 — 843d6509-d9d6-4f59-bf22-2a2d8f3f0510.
+   Quantifiers and safe/ground and sharing conclusions inspected. Additional conditional preservation of (R) goes beyond the short numbered lemma statement and is relevant to its use; no counterexample found. Raw binder/alpha issues remain to be resolved.
+5. theorem_4_3_and_4_4 — 5e24e9ec-f0f3-47bf-a0d2-46a45e19ddf5.
+   FALSE, proved by H1.
+6. theorem_4_5 — 5eb076ec-d2e4-4bc5-9e1f-e3de47f2bb7e.
+   Missing construction cost (H3); uses defective TermEquiv (H2). Its docstring also discusses normalization conclusions absent from its formal result.
+7. theorem_5_1 — 6697cd6f-3349-437a-a835-5aded351f76f.
+   Missing total normalization cost (H3); depends on H1/H2 infrastructure. No separate disproof of its weakened existential statement supplied.
+8. theorem_5_2 — 87f0a9b2-d444-41e1-8b7e-63b50aab8479.
+   Actual result is a reasonable BC-to-RA representation target. No counterexample found. The promised RS conclusion is absent.
+9. ptime_characterization — a39da23f-86c2-4263-9f64-dfc11038dbe0.
+   Actual goal is the RA/BC representation equivalence, not a direct machine-complexity theorem and not an RS characterization. No direct counterexample found. Repair dependent definitions and align advertised scope.
+
+REPRODUCTION
+From the repository root:
+  python3 reviews/2026-11-02-lambda-missions/check_lean.py reviews/2026-11-02-lambda-missions/higher_type/Counterexample.lean
+Uses the shared isolated compilation of the unchanged uploaded definitions, Lean 4.33.1. Output is preserved in certificate.log. Original proposal snapshot and extracted code were not edited. No remote updates, withdrawals, or submissions were made by this audit agent.

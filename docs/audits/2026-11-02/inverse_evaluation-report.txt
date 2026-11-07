@@ -1,0 +1,87 @@
+INVERSE EVALUATION MISSION — SOURCE AND SEMANTIC REVIEW
+Review date: 2026-11-02
+Proposal: 15e6e856-ad83-4ad8-8d88-f7cfdc7f058e
+https://prove2.me/my-missions/15e6e856-ad83-4ad8-8d88-f7cfdc7f058e
+Snapshot: proposal-before-review.json; original files in code/ are unchanged.
+Verdict: BLOCKED FOR RESUBMISSION. A central extraction lemma is formally false; Theorem 1's normalization assertion also fails for the same witness. The headline additionally weakens the source theorem through extra hypotheses.
+
+Primary source inspected
+Ulrich Berger and Helmut Schwichtenberg (1991), An Inverse of the Evaluation Functional for Typed Lambda-Calculus, LICS, pp. 203–211.
+Repository record: https://epub.ub.uni-muenchen.de/4261/
+Full primary PDF: https://epub.ub.uni-muenchen.de/4261/1/4261.pdf
+DOI: https://doi.org/10.1109/LICS.1991.151645
+Downloaded paper.pdf and extracted paper-raw.txt / paper.txt locally. Read the definitions and results in Sections 1–4, and the source's statement of the pr-model theorems on p. 208. Mission targets are two definition modules and seven theorem modules (the UI's nine-item count includes definitions).
+
+FINDING I1 — CRITICAL: EXTRACTION CAPTURES A FREE VARIABLE
+Location: code/00_BergerSchwichtenberg1991_Syntax.lean:329–332, canonicalFreshIndex.
+Definition artifact: 77bba890-32b5-4485-a94a-120c9b3361e3.
+Directly false target: lemma_2, artifact 2c7ff2fa-f3b1-4736-8533-346eb80d1f0c, code/03_BergerSchwichtenberg1991_lemma_2.lean.
+Also invalid under its supplied M/IF: theorem_1, artifact e7d7112d-cd6a-4f46-95eb-51f6952b462f, code/07_BergerSchwichtenberg1991_theorem_1.lean (normalization/substitution conjunct).
+
+Let x_[0] be the indexed variable of base type with index [false], and let
+  r = λ(named 0:o). λ(named 1:o). x_[0].
+This is a typed long beta-normal term of type o → o → o. Its indexed variable is free. The two sampled standardizations are
+  EMB r ε = λx_[]. λx_[0]. x_[0]
+  EMB r 0 = λx_[0]. λx_[0,0]. x_[0].
+Both samples are closed: the original free variable has been captured by a generated binder. Therefore freeIndices of BOTH samples is empty. canonicalFreshIndex returns [false], and EXTRACT (EMB r) returns the second displayed term. It is closed while r has free x_[0], so it cannot be alpha-equivalent to r.
+
+The mistake is reading freeIndices of the standardized samples. The paper (pp. 204–205) detects variable occurrences that remain at the same syntactic position when the starting index changes. Those occurrences may have become bound in a particular sample. The code's comment says every index occurring in the samples, but its implementation inspects only free indices.
+
+Kernel evidence: SyntaxAudit.lean imports the actual snapshot definitions and no open theorem. It proves alpha-equivalence preserves free-variable occurrence, proves extraction_not_alpha, then proves lemma_2_refuted: the negation of the exact uploaded conjunction. It also proves theorem_1_refuted for arbitrary supplied admissible model M and inversion family IF, by using r as both r and rStar and identity substitution in the theorem's second conjunct. This is a direct incompatibility with that conjunct, not merely a failing numerical test. Existence of M/IF is not constructed in the certificate; the theorem_1 refutation is explicitly conditional on these inputs, as is the uploaded statement.
+
+All three audited refutations have only propext, Classical.choice and Quot.sound in #print axioms. No sorry, native_decide, target import or custom axiom is used.
+
+Repair: replace the fresh-index selector and prove its freshness before rebuilding dependents. Tracking same-position occurrences follows the paper. A simpler conservative selector can inspect ALL indexed variable occurrences in a sample (including bound occurrences), and choose a strictly longer prefix; prove that it covers every indexed free variable of the original term. Do not attempt to repair lemma_2 by adding a closedness assumption: the paper and later substitution results require open terms. Re-review and replace all dependent published declarations after the definition changes.
+
+FINDING I2 — HIGH: THE HEADLINE ASSUMES ADDITIONAL HIGHER-TYPE CLOSURE AND THE INVERSION FAMILY
+Locations:
+- code/01_BergerSchwichtenberg1991_Models.lean:134–143, mkStepFun/mkStepFun_spec.
+- code/04_BergerSchwichtenberg1991_lemma_3.lean:7–26, hExtractComb and hStepComb.
+- code/08_BergerSchwichtenberg1991_completeness_pr_models.lean:8–31, hExtractComb, hStepComb and hIF.
+Models definition artifact: 0bb5bc30-2efd-41d1-b583-d0780cee8bca.
+Lemma 3 artifact: c9134df5-456e-42b1-8651-6eec851d26bf.
+Main artifact: c4cdb23c-1935-4e0d-9eaa-5d27cd2e4606.
+
+The paper's Lemma 3 (p. 206) applies to every pr-model. Its main completeness theorem (p. 208) requires primitive-recursive representability, without the three extra hypotheses. It constructs the needed lambda terms and interprets them in the model. The submission instead:
+1. Assumes the extract combinator exists.
+2. Assumes a step combinator for EVERY equality-respecting external function body : M.Dom base → M.Dom base.
+3. Assumes hIF, the existence of InversionFunctionals for every admissible expansion of M.
+No other mission target constructs these assumptions or eliminates them.
+
+The second point is substantially stronger than ordinary lambda closure. Its quantifier is not limited to functions represented by lambda terms. For a computable model with base Nat and ordinary equality, choose abstBar as second projection and funBar as first projection. The hStepComb equation then requires an element representing arbitrary body : Nat → Nat. This includes noncomputable functions, excluding HEO, which the source expressly includes among its examples (p. 204). This is a mathematical source mismatch; a Lean model of HEO was not constructed for this review.
+
+The comment above mkStepFun says the body comes from the reification/reflection construction, but no such restriction appears in its type. hIF assumes existence of the very family that Section 4 defines recursively. This does not assume the whole correctness conclusion, but it omits a central construction and makes the mission's claimed all-pr-model result conditional.
+
+Repair: represent the defining combinators as typed lambda terms and obtain their denotations using eval and a nonempty environment; define Phi/Psi by recursion on types, then prove their equations. Prove availability of an effective numbering and extract combinator. Remove arbitrary-body closure from AdmissibleModel and hStepComb/hIF from the final source theorem, rather than treating them as additional standing hypotheses. Supporting conditional lemmas are useful, but should not replace the headline theorem.
+
+FINDING I3 — HIGH FOUNDATIONAL GAP: PRMODEL ALLOWS EMPTY ENVIRONMENTS
+Location: code/01_BergerSchwichtenberg1991_Models.lean:32–59 (LambdaModel), 64 (Env), 80–81 (ModelsEq), and PRModel declaration.
+There is no requirement that each carrier, or the environment type, is inhabited. Evaluation laws quantify over environments, so if Env is empty, all of them hold vacuously. Primitive-recursive representability at ground/first-order types does not fill higher-order carriers.
+
+EmptyEnvironmentAudit.lean constructs an actual value shallowPR : PRModel:
+- Dom o = Nat;
+- Dom (o → σ) = Nat → Dom σ;
+- Dom ((ρ → τ) → σ) = Empty;
+- semantic equality is ordinary equality;
+- all unary and binary Nat functions are representable, so in particular all primitive-recursive functions are;
+- Env is empty because it must assign a value to a variable of type (o → o) → o.
+The certificate proves shallowPR_has_no_environment and shallowPR_models_every_equation. The latter is entirely vacuous semantic equality for any pair of terms. Axiom reports contain only propext and Quot.sound.
+
+This does not by itself refute the submitted conditional main theorem: its additional hypotheses exclude such models. It does establish that simply deleting those hypotheses would leave an inadequate base notion. Repair the model definition (for example, require Nonempty Env or inhabited carriers with the appropriate model laws), then derive the explicit combinators. The source's operative interpretation of lambda-models supports evaluation of closed terms and lambda-definable combinators; the current empty-environment implementation does not.
+
+ITEM-BY-ITEM COVERAGE
+00 Syntax (77bba890-32b5-4485-a94a-120c9b3361e3): read full syntax, typing, substitutions, equivalences, normal forms and standardization. Confirmed extraction defect I1. No additional definite discrepancy claimed for single/simultaneous substitution or alphaRename itself.
+01 Models (0bb5bc30-2efd-41d1-b583-d0780cee8bca): read full model, admissibility, inversion, primitive recursion and numbering definitions. Confirmed I2 and I3. Existence of an effective numbering is assumed, not supplied by a target.
+02 lemma_1 (c8b8f03b-7913-403f-b349-4daf6b82845b): matches alpha-invariance and the no-free-prefix side condition of source Lemma 1; no additional defect found. Not proved by this audit.
+03 lemma_2 (2c7ff2fa-f3b1-4736-8533-346eb80d1f0c): exact statement formally refuted by I1.
+04 lemma_3 (c9134df5-456e-42b1-8651-6eec851d26bf): source generality lost through added closure hypotheses, I2; model foundation must first be repaired, I3.
+05 lemma_4 (82d84dac-69b9-4561-9992-cfd317faff5f): four equations follow the source, but the source proofs use correct extraction/alpha-equivalence. Dependencies invalidated by I1; no separate model counterexample constructed for this entire conjunction.
+06 lemma_5 (9103856f-178c-455c-8cac-ea09d2f58b0e): shape follows the main lemma; exact EXTRACT in its base clause is a sensible way to remove the source's up-to-alpha substitution ambiguity. Nevertheless depends on broken extraction and strengthened model. No independent refutation of this entire conjunction constructed.
+07 theorem_1 (e7d7112d-cd6a-4f46-95eb-51f6952b462f): normalization/substitution conjunct formally contradicted by I1 for the supplied M/IF; proof certificate covers the whole conjunction under these inputs. Requires repaired extraction and construction/existence of IF.
+08 completeness_pr_models (c4cdb23c-1935-4e0d-9eaa-5d27cd2e4606): headline is conditional on numbering, hExtractComb, hStepComb, hIF; does not deliver the paper's every-pr-model theorem. I2/I3 block source-faithful resubmission. No claim that this whole conditional statement was independently formally disproved.
+
+REPRODUCTION
+From workspace root:
+  python3 reviews/2026-11-02-lambda-missions/check_lean.py reviews/2026-11-02-lambda-missions/inverse_evaluation/SyntaxAudit.lean
+  python3 reviews/2026-11-02-lambda-missions/check_lean.py reviews/2026-11-02-lambda-missions/inverse_evaluation/EmptyEnvironmentAudit.lean
+Both pass in Lean 4.33.1, matching the submission environment. The original statement modules contain intentional sorry placeholders; their compilation would not establish truth or source fidelity. No remote proposal, definition, theorem, status or review was modified.

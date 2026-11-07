@@ -1,0 +1,87 @@
+Source and statement review, 2026-11-01
+
+Scope: one replacement definition module and the four V2 declarations listed in
+readback_manifest.json. That manifest binds exact original and replacement bytes.
+The source is the local Berger-Buchholz-Schwichtenberg-2002.pdf, Section 4 and
+Section 5, preprint pp. 11–14; Section 2 supplies the universal-introduction rule.
+The creator authorized correction and relinking of this existing mission.
+
+Review procedure
+The implementation was checked against the paper by the coordinating agent.
+A separate agent, /root/v2_blind_readback, received only comment-free Lean code
+and the mission auditor instructions. Its seven literal read-backs are saved in
+readbacks.txt. The coordinating agent compared the read-backs, including every
+freshness condition and quantifier order, with the source and code. The theorem
+statements did not change during the read-back. This is an agent review, not a
+claim that a human or platform moderator has reviewed the replacements.
+
+Definition layer
+The indexed Realizer carrier has exactly the source's shape alternatives:
+epsilon at *, a raw term otherwise, together with a separate typing predicate.
+It does not fabricate a term at an absent realizer for X. The term language,
+formula classes, type assignment, comprehension substitution, and structural
+extraction remain the published ones. New realizability renames source-bound
+variables before translating, keeping existing realizer and comprehension
+parameters fixed. The maximum-identifier construction avoids every variable
+already present, not only free variables. Irrelevant formulas are returned up
+to alpha conversion; the original calculus explicitly permits that conversion.
+
+Theorem 4.1
+The hypotheses say that the given proof is derivable and that the dummy is typed
+and closed, assumption labels are formula-consistent, and their identifiers are
+separate from object identifiers in the proof. The last two are explicit naming
+conventions for the source's distinct variable classes. Both old restrictions
+on comprehension parameters have been removed. The conclusion uses the exact
+structural extraction, proves its typing, and permits only translated source
+assumptions in the target derivation. It does not require every source assumption
+to be used; this agrees with derivability from a set of assumptions.
+
+Theorem 5.1
+The arbitrary ordinary formulas and assumptions (7)–(9) are retained. Types and
+vector lengths are expressed by indexed families and typed optional variables.
+The quantifier variables must be fresh for the external assumptions, as required
+by universal introduction in the proof on p. 13. Auxiliary realizer and value
+variables are fresh where their instantiation must leave other premises fixed.
+The goal combinators may have free occurrences of the quantified object
+variables; the displayed outer lambda intentionally abstracts those occurrences.
+The premise that r is fresh for its formal input names expresses the displayed
+functional-input convention. No definiteness or goal-class restriction is added
+to this theorem's D and G lists. Success of raw extraction and output typing are
+conclusions, not hypotheses that a caller must supply.
+
+Theorem 5.2
+Both existential witnesses precede the universal comprehension quantifier.
+They are well typed and may depend on the corresponding formula's free object
+variables. The support bounds record the canonical construction's parameter
+dependence and are conclusions to be proved, not assumptions. The dummy alone
+is required to be closed. The optional w has exactly the type/absence prescribed
+by tau(G^X), and the remaining w/v freshness conditions concern auxiliary
+variables, not the formula parameters. This matches (12) and (13) on pp. 13–14.
+
+Corollary 5.3
+The witnesses are chosen before M. Their types and support bounds are explicit
+even when no qualifying M exists. M is closed only with respect to assumptions,
+and the new naming condition is independent of the goal comprehension. The
+conclusion exhibits p with extractRaw(M^X)=some p, then proves the type and
+correctness of precisely p applied to the formula realizers. This replaces the
+old default-on-failure expression without assuming extraction success. The
+support bounds and successful extraction strengthen the recorded conclusions
+of the canonical construction; they remain proof obligations.
+
+Edge cases and concrete checks
+Empty assumption/goal/quantifier lists are included. Absent realizer arguments
+are omitted consistently. The old capture witness still satisfies admissibility
+but now translates to a provable formula with its parameter free. The old 5.1
+counterexample fails the corrected assumption-freshness condition. A concrete
+classical proof of an atomic true goal satisfies the new root hypotheses, has
+the specified raw program, and has a typed correct output. The parameterized
+realizer from the earlier closedness audit retains the allowed formula parameter.
+
+Status
+All four replacement statements elaborate with precisely their intentional
+target proof hole. The definition module and completed regression lemmas have
+no placeholders or nonstandard axioms. General Theorems 4.1, 5.1, 5.2 and
+Corollary 5.3 have NOT been proved by this review. Publishing these declarations
+repairs the targets; proof progress must be tracked separately. The existing
+first three proved milestones are preserved. No old invalid target is used as
+a proof dependency of a repaired result.

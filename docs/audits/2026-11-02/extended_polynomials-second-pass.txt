@@ -1,0 +1,27 @@
+Independent second pass — 2026-11-02
+Reviewer: audit_higher_type agent, after completing the separate BNS2000 audit.
+
+Read the complete five extracted Lean modules and visually inspected both source
+pages 113–114 (https://epub.ub.uni-muenchen.de/4273/1/10.pdf). This was a targeted
+challenge to the root review's conclusion, not a proof of the open theorems.
+
+No additional blocking theorem defect found. In particular:
+- AlphaEq and its incorporation in ReducesTo/TermEq avoid the raw-name normal-form
+  failure proved for BNS2000. Fresh alpha renaming requires the new variable to be
+  absent from allVars, preventing capture; transitivity supplies general renaming.
+- The fixed ground binder in compTerm/iterTerm is unsafe for arbitrary arguments,
+  as already reported. Current add/mul/const uses have disjoint variable/type pairs.
+- The normal-subterm grammar permits bound ground variables and includes the
+  reflexive subterm; its type/free-variable hypotheses exclude higher-type heads.
+- Positive numeric arguments in the polynomial subterm lemma are essential and
+  present. Substitution targets are injective, numerals are closed, and same numeric
+  ids at different types are distinct variables. No variable-choice counterexample
+  was found in nested constant-function chains or alpha-renaming cases.
+- Arity zero is consistent with constant numerical functions. The exceptional
+  eta-short identity at Church-numeral type is explicitly allowed in the normal-form
+  classification, while the existence-based main characterization can choose expanded
+  representatives. The source's blanket numeral-normal-form sentence would be too
+  strong for beta-only equality; the submitted qualification is appropriate.
+
+Agree with report.txt: fix/qualify the generic helper contract, but do not label
+any of the four current theorem targets false on this evidence. They remain open.

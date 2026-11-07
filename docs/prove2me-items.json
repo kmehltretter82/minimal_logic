@@ -1,0 +1,551 @@
+[
+ {
+  "file": "Definitions/Def_BBS2002_Arithmetic.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "82c4fc94-8ffe-408d-b006-e3fd31227dc8",
+  "status": "Definition",
+  "title": "Section 2: System T and the Arithmetical Systems Z^X, Z, Z_0^X, and Z_0",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BBS2002_Extraction.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "4f02e7d1-32a1-45a7-88fe-5c2a11920738",
+  "status": "Definition",
+  "title": "Sections 3-5: Definite and Goal Formulas, Program Extraction, and Modified Realizability",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BBS2002_V2_Realizability.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "2b406e5b-e279-4ead-be27-57f9df8682d4",
+  "status": "Definition",
+  "title": "Capture-avoiding modified realizability and indexed realizers",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_V2_corollary_5_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "ad4cea40-60de-4118-83d8-24fc9821c437",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "32c9a598-6f4c-425f-98c7-70e2016c00ec"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_V2_theorem_4_1.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "3aa5ce40-47eb-4374-8cfe-4a67684240e7",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "3a1ed386-6405-4d60-9b20-5ad1eef0756c"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_V2_theorem_5_1.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "5bb45ceb-47e6-41dd-ab02-a8c00a7d7f65",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "65af0c42-2403-4b84-8bde-d0fe404dbd39"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_V2_theorem_5_2.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "bc55a9ab-b1e2-4cd9-be31-3c34badd35d2",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "0a8d916f-5a11-426f-87de-9a5bec7755a8"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_lemma_3_1_and_3_2.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "73198c20-0ee8-4620-8b96-8cca48eab509",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "afb63d6c-b19f-40cb-b447-59f79fd29daf"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_lemmas_2_1_to_2_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "8618d598-a26e-46e0-87ff-44053f41b66c",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "85581098-c051-4137-a38d-d45bfe64d1ab"
+ },
+ {
+  "file": "Solutions/Sol_BBS2002_theorem_3_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "4242300c-122a-4c1d-bfda-db448aac894c",
+  "status": "Proved",
+  "title": null,
+  "milestone": null,
+  "submission_id": "c505fc37-611d-43cb-8e2c-fa68bf0973f6"
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_V2_corollary_5_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "ad4cea40-60de-4118-83d8-24fc9821c437",
+  "status": "Proved",
+  "title": "Refined program extraction with free parameters (Corollary 5.3, corrected)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_V2_theorem_4_1.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "3aa5ce40-47eb-4374-8cfe-4a67684240e7",
+  "status": "Proved",
+  "title": "Soundness of modified realizability (Theorem 4.1, corrected)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_V2_theorem_5_1.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "5bb45ceb-47e6-41dd-ab02-a8c00a7d7f65",
+  "status": "Proved",
+  "title": "Computational content of classical proofs (Theorem 5.1, corrected)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_V2_theorem_5_2.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "bc55a9ab-b1e2-4cd9-be31-3c34badd35d2",
+  "status": "Proved",
+  "title": "Uniform realizers with free parameters (Theorem 5.2, corrected)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_lemma_3_1_and_3_2.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "73198c20-0ee8-4620-8b96-8cca48eab509",
+  "status": "Proved",
+  "title": "Derivability Properties of Definite and Goal Formulas (Lemmas 3.1 & 3.2)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_lemmas_2_1_to_2_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "8618d598-a26e-46e0-87ff-44053f41b66c",
+  "status": "Proved",
+  "title": "Equivalence of Z^X and Z_0^X (Lemma 2.1), L-Stability (Lemma 2.2), and Quantifier-Free Case Distinction (Lemma 2.3)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BBS2002_theorem_3_3.lean",
+  "paper": "BBS2002",
+  "prove2me_id": "4242300c-122a-4c1d-bfda-db448aac894c",
+  "status": "Proved",
+  "title": "Refined A-Translation for Definite and Goal Formulas (Theorem 3.3)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_Schwichtenberg1976V2_Lambda.lean",
+  "paper": "S1976",
+  "prove2me_id": "c4983a05-6030-4352-84e0-42d2cf1368cc",
+  "status": "Definition",
+  "title": "Simply Typed λ-Calculus, Church Numerals, Combinators, and Extended Polynomials",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_Schwichtenberg1976V2_combinators_and_sufficiency.lean",
+  "paper": "S1976",
+  "prove2me_id": "55478b5d-5bc6-494b-b71e-5ee5eb57cb71",
+  "status": "Open",
+  "title": "Classification of Closed Normal Terms of Type `ν` and Sufficiency for Extended Polynomials",
+  "milestone": "Sufficiency — Combinators and Extended Polynomials (p. 113)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_Schwichtenberg1976V2_definable_iff_extended_polynomial.lean",
+  "paper": "S1976",
+  "prove2me_id": "4e1cedd9-9d1f-4edf-a9bb-00a0da4beef0",
+  "status": "Open",
+  "title": "Schwichtenberg's Definability Theorem: λ-Definable Functions over `ν` are Exactly the Extended Polynomials",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_Schwichtenberg1976V2_normal_subterm_structure.lean",
+  "paper": "S1976",
+  "prove2me_id": "f555d24c-a4a9-469c-9df4-1bce60a7f62b",
+  "status": "Open",
+  "title": "Structural Classification of Subterms of `r = nf(t F₁ ... Fₖ α)`",
+  "milestone": "Normal-Form Analysis — Subterms of Type `0 → 0` (p. 114, clauses (1)-(3))",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_Schwichtenberg1976V2_subterm_polynomial_lemma.lean",
+  "paper": "S1976",
+  "prove2me_id": "23e596a5-fa5a-4435-b87f-4c00089660ee",
+  "status": "Open",
+  "title": "Polynomial Evaluation of Type `0 → 0` Subterms on Nonzero Numerals",
+  "milestone": "Polynomial Evaluation Lemma on Positive Numerals (p. 114)",
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_AehligSchwichtenberg2002_Bounds.lean",
+  "paper": "AS2002",
+  "prove2me_id": "84cd66c7-2b4e-44e6-9c44-483bc81fd640",
+  "status": "Definition",
+  "title": "Sections 3-4: Weight `μ(r)`, Iteration Depth `d(r)`, and Syntactic Valuation `|r|_ξ`",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_AehligSchwichtenberg2002_Syntax.lean",
+  "paper": "AS2002",
+  "prove2me_id": "1ce7bcef-c3e9-422e-924f-1735c5fbc4d9",
+  "status": "Definition",
+  "title": "Section 2: Affine Non-Size-Increasing Types, Terms, and Head-Controlled Reduction",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_corollary_4_4.lean",
+  "paper": "AS2002",
+  "prove2me_id": "ee8fa0d7-cd23-4f23-8a0e-f01805651c6e",
+  "status": "Open",
+  "title": "Corollary 4.4: Constructor Bound on Normal Forms of Base Type",
+  "milestone": "Section 4 — Normal-Form Size Bound (Corollary 4.4)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_corollary_4_9.lean",
+  "paper": "AS2002",
+  "prove2me_id": "6d615b63-22ea-4eeb-9957-c01bfe51d035",
+  "status": "Open",
+  "title": "Corollary 4.9: Syntactic Characterization of Polynomial Time",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_lemma_3_4.lean",
+  "paper": "AS2002",
+  "prove2me_id": "be7ab9df-d8b3-4216-8d1c-e9c3541e5d96",
+  "status": "Open",
+  "title": "Lemma 3.4: Linear Substitution Decreases Weight `μ`",
+  "milestone": "Section 3 — Linear Substitution Weight Bound (Lemma 3.4)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_lemma_3_5.lean",
+  "paper": "AS2002",
+  "prove2me_id": "dcf7735d-0553-4d21-a5c5-211092d5ad01",
+  "status": "Open",
+  "title": "Lemma 3.5: Non-Duplicating Reduction Decreases Weight `μ`",
+  "milestone": "Section 3 — Depth-0 Weight Decrease (Lemma 3.5)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_lemma_4_3.lean",
+  "paper": "AS2002",
+  "prove2me_id": "870822b8-2c65-4745-a6b0-a99fd5dd1e39",
+  "status": "Open",
+  "title": "Lemma 4.3: Non-Size-Increasing Valuation Under Reduction",
+  "milestone": "Section 4 — Non-Size-Increasing Valuation (Lemma 4.3)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_lemma_4_7.lean",
+  "paper": "AS2002",
+  "prove2me_id": "1fdf124e-5735-4b71-ab33-4fe415758c90",
+  "status": "Open",
+  "title": "Lemma 4.7: Exponential Tower Step Bound by Iteration Depth",
+  "milestone": "Section 4 — Explicit Step and Size Bounds (Lemma 4.7)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_proposition_3_6.lean",
+  "paper": "AS2002",
+  "prove2me_id": "ca4f6a84-88c3-4e4d-b349-baf9d394ce06",
+  "status": "Open",
+  "title": "Proposition 3.6: Subject Reduction",
+  "milestone": "Section 3 — Subject Reduction (Proposition 3.6)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_AehligSchwichtenberg2002_theorem_4_8.lean",
+  "paper": "AS2002",
+  "prove2me_id": "cbba3b20-e4d3-4b3d-b293-64785440d99d",
+  "status": "Open",
+  "title": "Theorem 4.8: Polynomial Normalization of Closed Terms Applied to Base Arguments",
+  "milestone": "Section 4 — Polynomial Normalization on Inputs (Theorem 4.8)",
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_ABHS2004_Arithmetic.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "25cf72d6-0484-4d02-a3f3-4615360888f6",
+  "status": "Definition",
+  "title": "Section 3: The Arithmetical System N-HA^ω and Natural Deduction",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_ABHS2004_Realizability.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "4820983d-c521-416a-afd7-67121134b395",
+  "status": "Definition",
+  "title": "Section 4: Clean Types, Extracted Programs, and Modified Realizability",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_ABHS2004_TermSystem.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "aee9d687-6c4e-4dcc-8a9a-6a87e20650f5",
+  "status": "Definition",
+  "title": "Section 2: Types, Linear/Passive Contexts, Affine Terms, and Denotational Semantics",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_corollary_2_22.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "9332b2a2-fce3-4dee-ba84-816298c4e419",
+  "status": "Open",
+  "title": "Corollary 2.22: Polynomial Step and Space Bounds for Closed Terms",
+  "milestone": "Section 2 — Polynomial Normalization Bounds (Corollary 2.22)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_corollary_4_11.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "bf94660f-3637-40e8-ba3b-06853916376b",
+  "status": "Open",
+  "title": "Corollary 4.11: Polynomial-Time Program Extraction from N-HA^ω",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_corollary_4_8.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "1747f247-f7a7-44e1-b4c6-03f368f7bf80",
+  "status": "Open",
+  "title": "Corollary 4.8: Substitution Commutes with Program Extraction",
+  "milestone": "Section 4 — Extraction Substitution Lemma (Corollary 4.8)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_lemma_2_11.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "c84a3ce3-0a4d-4f00-8a88-301a8a774ed9",
+  "status": "Open",
+  "title": "Lemma 2.11: Non-Size-Increasing Base Constants",
+  "milestone": "Section 2 — Non-Size-Increasing Base Constants (Lemma 2.11)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_proposition_2_13.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "49839b16-26ee-4654-82f5-a18c8380df60",
+  "status": "Open",
+  "title": "Proposition 2.13: Subject Reduction for the Affine Term Calculus",
+  "milestone": "Section 2 — Subject Reduction (Proposition 2.13)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_theorem_2_25.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "781d5724-8400-4aaa-b8e9-a80da0140554",
+  "status": "Open",
+  "title": "Theorem 2.25: Polynomial-Time Soundness of the Affine Term Calculus",
+  "milestone": "Section 2 — Polynomial-Time Term Soundness (Theorem 2.25)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_theorem_4_7.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "4d154f33-9db8-4048-8df3-fd719b97a5dc",
+  "status": "Open",
+  "title": "Theorem 4.7: Typing of Extracted Programs",
+  "milestone": "Section 4 — Typing of Extracted Programs (Theorem 4.7)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_ABHS2004_theorem_4_9.lean",
+  "paper": "ABHS2004",
+  "prove2me_id": "8153f9a2-f87b-4253-b9ba-b757d52d00d7",
+  "status": "Open",
+  "title": "Theorem 4.9: Soundness of Modified Realizability for N-HA^ω",
+  "milestone": "Section 4 — Realizability Soundness Theorem (Theorem 4.9)",
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BergerSchwichtenberg1991_Models.lean",
+  "paper": "BS1991",
+  "prove2me_id": "0bb5bc30-2efd-41d1-b583-d0780cee8bca",
+  "status": "Definition",
+  "title": "Sections 1, 3-5: Extensional λ-Models, Admissible Models, pr-Models, and Reification/Reflection (`Φ_ρ`/`Ψ_ρ`)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BergerSchwichtenberg1991_Syntax.lean",
+  "paper": "BS1991",
+  "prove2me_id": "77bba890-32b5-4485-a94a-120c9b3361e3",
+  "status": "Definition",
+  "title": "Sections 1-2: Simply Typed λ-Calculus, Long β-Normal Forms, and Bound-Variable Standardization (`EMB`/`EXTRACT`)",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_completeness_pr_models.lean",
+  "paper": "BS1991",
+  "prove2me_id": "c4cdb23c-1935-4e0d-9eaa-5d27cd2e4606",
+  "status": "Open",
+  "title": "Inversion, Normalization, and Strong Completeness Theorem for pr-Models",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_lemma_1.lean",
+  "paper": "BS1991",
+  "prove2me_id": "c8b8f03b-7913-403f-b349-4daf6b82845b",
+  "status": "Open",
+  "title": "Lemma 1: Bound-Variable Standardization Properties",
+  "milestone": "Section 2 — Bound-Variable Standardization (Lemma 1)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_lemma_2.lean",
+  "paper": "BS1991",
+  "prove2me_id": "2c7ff2fa-f3b1-4736-8533-346eb80d1f0c",
+  "status": "Open",
+  "title": "Lemma 2: Injectivity and Soundness of `EMB` and `EXTRACT`",
+  "milestone": "Section 2 — Representation of α-Equivalence Classes by Term Families (Lemma 2)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_lemma_3.lean",
+  "paper": "BS1991",
+  "prove2me_id": "c9134df5-456e-42b1-8651-6eec851d26bf",
+  "status": "Open",
+  "title": "Lemma 3: Every pr-Model is Admissible",
+  "milestone": "Section 3 — Admissibility of pr-Models (Lemma 3)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_lemma_4.lean",
+  "paper": "BS1991",
+  "prove2me_id": "82d84dac-69b9-4561-9992-cfd317faff5f",
+  "status": "Open",
+  "title": "Lemma 4: Code-Level Properties of `f-extract`, `f-app`, and `fam`",
+  "milestone": "Section 3 — Auxiliary Term-Family Operations (Lemma 4)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_lemma_5.lean",
+  "paper": "BS1991",
+  "prove2me_id": "9103856f-178c-455c-8cac-ea09d2f58b0e",
+  "status": "Open",
+  "title": "Lemma 5 (Main Lemma): Reification of Long β-Normal Forms in `η_θ`",
+  "milestone": "Section 4 — Main Reification Lemma (Lemma 5)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BergerSchwichtenberg1991_theorem_1.lean",
+  "paper": "BS1991",
+  "prove2me_id": "e7d7112d-cd6a-4f46-95eb-51f6952b462f",
+  "status": "Open",
+  "title": "Theorem 1: Inversion of the Evaluation Functional in Admissible Models",
+  "milestone": "Section 4 — Inversion of Evaluation in Admissible Models (Theorem 1)",
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BNS2000_Syntax.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "524b25b3-0657-4c05-9ec3-3206a0778e9e",
+  "status": "Definition",
+  "title": "Sections 2-3: Simple Types, Binary Word Constants, Higher-Type Recursion, and the Bellantoni-Cook Algebra BC",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Definitions/Def_BNS2000_Terms.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "02e9f80a-7062-4b5e-ad64-3827cc010519",
+  "status": "Definition",
+  "title": "Sections 4-5: Safe/Complete Variables, Affinability, the Term Systems RA and RS, and Register Evaluation NFEval",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_lemma_4_1_and_4_2.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "843d6509-d9d6-4f59-bf22-2a2d8f3f0510",
+  "status": "Open",
+  "title": "Safe/Ground Normal Forms (Lemma 4.1) and Sharing via Ground β_ι-Expansions (Lemma 4.2)",
+  "milestone": "Safe/Ground Normal Forms & Sharing Lemma (Lemmas 4.1 & 4.2, p. 22)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_ptime_characterization.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "a39da23f-86c2-4263-9f64-dfc11038dbe0",
+  "status": "Open",
+  "title": "Characterization of the Polynomial-Time Functions by RA and RS",
+  "milestone": null,
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_theorem_3_1.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "af34efec-8aba-46ba-b515-02995cb6922d",
+  "status": "Open",
+  "title": "Polynomial-Time Normalization of First-Order Ramified Terms",
+  "milestone": "First-Order Ramified Normalization (Theorem 3.1, p. 20)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_theorem_4_3_and_4_4.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "5e24e9ec-f0f3-47bf-a0d2-46a45e19ddf5",
+  "status": "Open",
+  "title": "Register-Machine Evaluation and Linear Step/Register Bounds for R-Free RS-Terms (Theorem 4.3 & Corollary 4.4)",
+  "milestone": "Register Evaluation of R-Free RS-Terms (Theorem 4.3 & Corollary 4.4, pp. 23-24)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_theorem_4_5.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "5eb076ec-d2e4-4bc5-9e1f-e3de47f2bb7e",
+  "status": "Open",
+  "title": "Elimination of Recursors from RS-Terms with Polynomial Length Bound (Theorem 4.5)",
+  "milestone": "Recursor Elimination in RS with Polynomial Size Bound (Theorem 4.5, pp. 25-26)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_theorem_5_1.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "6697cd6f-3349-437a-a835-5aded351f76f",
+  "status": "Open",
+  "title": "Bounding Theorem — Polynomial-Time Normalization of Closed Level-1 RA-Terms (Theorem 5.1)",
+  "milestone": "Bounding Theorem for Closed Level-1 RA-Terms (Theorem 5.1, p. 26)",
+  "submission_id": null
+ },
+ {
+  "file": "Theorems/Thm_BNS2000_theorem_5_2.lean",
+  "paper": "BNS2000",
+  "prove2me_id": "87f0a9b2-d444-41e1-8b7e-63b50aab8479",
+  "status": "Open",
+  "title": "Inclusion Theorem — Embedding Bellantoni-Cook Safe Recursion into RA and RS (Theorem 5.2)",
+  "milestone": "Inclusion Theorem — Embedding BC into RA and RS (Theorem 5.2, pp. 26-29)",
+  "submission_id": null
+ }
+]

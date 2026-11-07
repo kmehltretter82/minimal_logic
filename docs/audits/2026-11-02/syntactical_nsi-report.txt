@@ -1,0 +1,42 @@
+Review of A Syntactical Analysis of Non-Size-Increasing Polynomial Time Computation
+Snapshot: proposal-before-review.json, proposal 7af10cd8-5e9e-4347-a4cf-2232bd15d007.
+Reviewed 2026-11-02. No remote changes made.
+
+Verdict: changes required. The universal outer-list-length claim in Corollary 4.4 is false for the submitted arbitrary element type. In addition, every published natural-language description disagrees with its current formal content. Compilation of placeholders is not evidence of source faithfulness or truth.
+
+P1 — Corollary 4.4 counts only outer list entries and is false for nested data.
+Affected item: AehligSchwichtenberg2002.corollary_4_4, theorem ID ee8fa0d7-cd23-4f23-8a0e-f01805651c6e.
+Location: code/06_AehligSchwichtenberg2002_corollary_4_4.lean:4-9.
+The statement quantifies over every Ty τ and bounds output listEntryCount by input listEntryCount. Take τ=L(B). A closed affine program of type L(L(B)) ⊸ L(L(B)) can turn a singleton outer list containing a singleton inner Boolean list into a two-element outer list of empty inner lists. The two diamond tokens are preserved: one came from the outer cons and one from the inner cons. The outer list length therefore increases from 1 to 2 despite no increase in resource use.
+
+Explicit program, using the source's notation:
+  h = λ e^⋄, b^B, q^{L(L(B))}. cons_{L(B)} e nil_B q
+  g = λ d^⋄, a^{L(B)}, z^{L(L(B))}.
+        cons_{L(B)} d nil_B (a {h} z)
+  f = λ xs^{L(L(B))}. xs {g} nil_{L(B)}
+  input = cons_{L(B)} d (cons_B e tt nil_B) nil_{L(B)}
+  output = cons_{L(B)} d nil_B (cons_{L(B)} e nil_B nil_{L(B)})
+Here d and e are distinct free diamond variables, permitted by IsCanonicalListInput. The input and output are normal, and f input reduces to output in eleven steps.
+
+Evidence: counterexample.lean imports only the submitted definition modules and constructs the typing derivation, the normal input, all eleven reductions, normal output, and the contradiction to m≤1. build_counterexample.py is the generator; the Lean kernel is the checker. The certificate compiles successfully in Lean 4.33.1; counterexample-check.log records failed 0 and axiom dependencies restricted to propext, Classical.choice and Quot.sound, with no sorryAx. The theorem submitted_corollary_4_4_false refutes the full submitted universal statement, with all four hypotheses supplied.
+
+Source comparison: the author preprint https://arxiv.org/pdf/cs/0011037 (v2), Corollary 4.4 on PDF p.11, prefaces the claim as about type-1 functions. Its proof relates list length to free-variable resource count. The submitted universal τ and unrestricted nested canonical inputs do not justify that equality. Preserve the intended resource-size result explicitly, or first restrict the corollary to binary lists (τ=B) with one token per entry. Do not silently keep arbitrary τ and merely quote the informal corollary. The binary-list main target Corollary 4.9 does not have this same counterexample.
+
+P1 — Natural-language metadata describes a different calculus and different theorems.
+Affected: all ten mission items. See metadata-comparison.txt for the exact downloaded natural_language_statement and readback fields.
+The Syntax description introduces !-arrows, c_i/d_i destructors, a two-zone term context, and B=L(⋄), none of which exists in the uploaded Syntax module. The actual source and code have B as a base type, ⋄, L, tensor, product and linear arrow. Bounds describes a measure μ and environment-graded valuations absent from the code. The named lemmas' prose likewise describes unrelated results. The blind readbacks mostly describe the code correctly, making the contradiction directly visible within the submission itself.
+Repair: rewrite every item title/description and milestone text from the current source statement and final Lean signature. Regenerate independent readbacks after the mathematical corrections. Keep source numbering intact.
+
+Coverage of all ten items (formal and natural-language fields inspected):
+1. Syntax — 1ce7bcef-c3e9-422e-924f-1735c5fbc4d9. Constructors, typing, capture-avoiding substitution, conversions and application-only reduction broadly match source Definitions 2.1–2.4 and 3.1–3.3. Representation uses named raw terms instead of quotienting by alpha-equivalence; this requires standard renaming infrastructure when proving, but no additional false target was established here. Metadata wrong.
+2. Bounds — 84cd66c7-2b4e-44e6-9c44-483bc81fd640. termLength, theta, truncation and free-variable measures checked against source Definitions 4.1/4.5. IsCanonicalListInput allows nested element tokens, which exposes the Corollary 4.4 issue. Metadata wrong.
+3. lemma_3_4 — be7ab9df-d8b3-4216-8d1c-e9c3541e5d96. Formal substitution typing corresponds to source Lemma 3.4. Prose instead claims weight decrease. No separate formal counterexample found.
+4. lemma_3_5 — dcf7735d-0553-4d21-a5c5-211092d5ad01. Formal subject reduction corresponds to source Lemma 3.5. Prose instead claims depth-zero weight decrease. No separate formal counterexample found.
+5. proposition_3_6 — ca4f6a84-88c3-4e4d-b349-baf9d394ce06. Formal normal-form classification corresponds to source Proposition 3.6. Prose instead claims subject reduction and depth monotonicity. No separate formal counterexample found.
+6. lemma_4_3 — 870822b8-2c65-4745-a6b0-a99fd5dd1e39. Formal absence of closed diamond terms corresponds to source Lemma 4.3, with explicit freeVars nonemptiness. Prose instead claims valuation decrease. No separate formal counterexample found.
+7. corollary_4_4 — ee8fa0d7-cd23-4f23-8a0e-f01805651c6e. False outer-length bound; see above. Prose additionally describes a different constructor bound.
+8. lemma_4_7 — 1fdf124e-5735-4b71-ab33-4fe415758c90. Formal theta substitution inequality corresponds to source Lemma 4.7. Missing x.ty=ρ is not by itself an error: the source lemma is a syntactic bound on substitution and also states it without that constraint. Prose instead claims a normalization bound with powers of 2. No separate formal counterexample found.
+9. theorem_4_8 — cbba3b20-e4d3-4b3d-b293-64785440d99d. Formal strict-decrease theorem matches source Theorem 4.8; added chain-length conjunct needs the usual preservation and free-variable monotonicity argument. Prose instead describes closed !-modal polynomial normalization. No separate formal counterexample found.
+10. corollary_4_9 — 6d615b63-22ea-4eeb-9957-c01bfe51d035. Formal binary-list polynomial step bound is a reasonable explicit strengthening of source Corollary 4.9, with disjoint token contexts and output length bound. Degree max(braceDepth t,1) accounts for input length. No machine-time semantics is encoded; the source itself distinguishes a step bound from a machine implementation. Prose references nonexistent !B types. No separate formal counterexample found.
+
+Scope: source sections 2–4 and every uploaded definition/theorem item were inspected. No claim is made that unaffected open theorems have been proved. This report identifies definite blockers, not an exhaustive proof of correctness of the remaining package.

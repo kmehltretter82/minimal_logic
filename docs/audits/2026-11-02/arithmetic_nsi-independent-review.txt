@@ -1,0 +1,62 @@
+Independent root review of the arithmetic submission, 2026-11-02
+
+AR-CLEAN — Confirmed utility defect: cleaning list iteration loses a required unit argument.
+Location: code/02_ABHS2004_Realizability.lean:330–356 (cleanTerm).
+Take the closed, linearly typed iterator over nil_U with step
+  λd:diamond. λu:U. λa:L(U). a.
+It has type L(U) -> L(U). Cleaning deletes the unit-typed binder u, but retains
+the same iterator constructor. That constructor still requires the step's element
+argument of type U. The resulting term has no weak type at all.
+CleanIteratorAudit.lean proves closedness, input typing, the deleted binder, and
+absence of any weak type for the cleaned term. No theorem target is imported;
+axioms are at most propext. This is separate from the direct Theorem4.7 refutation.
+
+Repair: give cleaning a type-directed iterator case that restores any erased
+unit element argument at the interface, or define a cleaned calculus with an
+explicitly adapted iterator signature and prove its correspondence to the source.
+Do not treat the source's schematic c(r){c(s)} notation as a license for an ill-typed
+term in this explicit encoding.
+
+AR-SIZE — The coefficient-one syntactic length bound is too strong.
+Locations: code/06_ABHS2004_theorem_2_25.lean:19;
+code/10_ABHS2004_corollary_4_11.lean:23.
+The paper's Definition2.24 compares natural size, term length, and free-variable
+count only up to type-dependent constants. Exact syntactic length cannot simply
+replace natural size in an additive bound with coefficient one.
+
+For example, the closed affine program
+  λl:L(U). (l {λd:diamond. λu:U. λa:L(B). cons_B d tt a}) nil_B
+maps a list of n units to n true booleans, using the same n distinct diamond tokens.
+The submitted termLength counts the input as 3n+1 and output as4n+1. Thus the
+length increase is n and cannot be absorbed into a program-dependent constant k.
+The program is linear: u is unused, d and a occur once, and the step is closed.
+Its list-iteration reductions preserve the n cells and replace eps with tt in each.
+
+SizeMeasureAudit.lean certifies both length formulas and that no additive k
+bounds this family. It is not a kernel proof of this program's execution or of
+the whole negation of Theorem2.25; those parts are the direct mathematical
+counterexample argument above. The supplied author preprint's Corollary4.11
+itself uses loose term-length wording, so distinguish a source shorthand/erratum
+from a copying error. The literal Lean assertion requires a precise valid bound.
+For Corollary4.11, the same size clause needs review; this certificate does not
+construct a derivation satisfying all of that corollary's hypotheses.
+
+Repair: use total diamond-resource count/a specified natural size for the exact
+non-size-increasing assertion, and bound raw termLength by c*inputLength+k with
+type-dependent c. Keep runtime's polynomial degree claim separate from size.
+The public goal prose and milestone descriptions must be changed accordingly.
+
+Coverage of the three Section2 preliminary targets:
+lemma_2_11 follows source subject reduction and free-variable preservation;
+proposition_2_13 follows source almost-closed canonical forms;
+corollary_2_22 combines source Lemma2.21 and Corollary2.22, with occurrence counts
+and correct positive multiplier in theta. No new counterexample found there.
+Definitions preserve the source's restriction against reduction under lambda,
+closed iterator step, and disjoint free variables for ordinary application.
+The set model fixes the diamond carrier to Unit rather than an arbitrary nonempty
+set; it is a specialization, but does not itself explain the confirmed failures.
+
+The full-form Axiom16Audit.lean repeats all four conjuncts of uploaded theorem_4_7
+and proves its negation using the independently constructed valid axiom instance.
+The accompanying agent report covers the arithmetic rules, metadata mismatch,
+realizability targets, and recommended dependency replacements in more detail.

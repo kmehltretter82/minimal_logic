@@ -1,0 +1,99 @@
+Independent repair design review — Extended Polynomials, 2026-11-02
+
+Reviewed the exact uploaded definition module, the existing audit report, and
+the already checked capture counterexamples. This note recommends the smallest
+robust correction; it does not certify an implementation not yet supplied.
+
+Recommended correction
+
+Treat xId as a preferred binder identifier. For composition, construct candidate
+x = (xId, tau). Retain it exactly when x is absent from freeVarOccurrences t and
+freeVarOccurrences s. Otherwise choose
+  (max (maxVarId t) (maxVarId s) + 1, tau).
+For iterTerm use candidate (xId, zero), retaining it if absent from the argument's
+free variables and otherwise selecting (maxVarId alpha + 1, zero).
+
+The candidate must be a typed Var, not an untyped numeric id. Equal numeric ids
+at distinct types do not capture one another in this representation. Freshness
+from free variables is sufficient: reusing the name of a variable bound inside
+an input term is harmless. Checking allVars instead would also be safe, but would
+rename some terms unnecessarily. A bound above all ids is a simple safe fallback.
+The fallback need not exceed the preferred id; if the preferred candidate was
+unsafe, its id was already bounded by an input's maximum id.
+
+Document the changed xId API explicitly: it requests a binder name when safe,
+and is no longer a promise that this exact id will be used. Do not silently retain
+a docstring suggesting the supplied id always appears as the output's binder.
+
+Current combinators remain literally unchanged with the candidate-preserving
+strategy, not merely alpha-equivalent:
+- addComb's requested ground binder id0 is absent from inputs headed by F/G and
+  alpha. Alpha's id1 has endomorphism type.
+- mulComb's requested endomorphism binder id1 is absent from F and G (ids3/4,
+  numeral type).
+- constComb k's requested ground binder id0 is absent from alpha (id1,
+  endomorphism type), for every k, including zero.
+- condComb and churchNumeral do not call the defective helpers and need no edit.
+
+Verification sufficient for this repair
+
+1. Prove the selected binder's type and nonmembership in each input's free
+   variables for arbitrary inputs and arbitrary preferred ids. Establish the
+   supporting bound v in FV(t) implies v.id <= maxVarId(t).
+2. Prove a set-level free-variable contract:
+     v in FV(compTerm tau t s) iff v in FV(t) or v in FV(s).
+   For iteration, n=0 has empty FV, while n>0 has exactly FV(alpha).
+   Membership equality is better than a brittle list-order equality.
+3. Prove typing preservation under the obvious input typing hypotheses. These
+   are independent syntax facts, not assumptions about the open mission targets.
+4. Prove the reviewed capture examples now retain their previously captured
+   free variables. Include collision in the second composition argument, and
+   the iteration n=0 boundary. Check a bound-only collision remains safe.
+5. Confirm current addComb, mulComb, and all constComb k syntax stays unchanged.
+   A direct unfolding proof for arbitrary k is preferable to finite evaluation.
+6. Compile all five replacement modules and print axioms of every new proved
+   guarantee. Only the four intended research targets should remain sorry.
+
+Do not demand or claim literal equality substTerm t x r = t solely from x not
+being free in t: the current substitution algorithm can rename inner binders
+when they conflict with FV(r), even when x is absent. The correct general fact
+is alpha equivalence. A full application/reduction correctness theorem can use
+that infrastructure later; binder freshness and FV preservation already establish
+the specific no-capture fix without making that incorrect stronger claim.
+
+Publication/dependency strategy
+
+Recommend one complete replacement definition module with a new namespace such
+as Schwichtenberg1976V2, plus four replacement theorem items importing it. All
+theorem statements should be textually identical modulo the deliberate namespace
+and import changes. An implementation diff should show only the namespace change,
+freshness infrastructure, two helper edits, their documentation, and proved audit
+facts; no altered assumptions/conclusions of the four research targets.
+
+An extension module importing the original and adding compTermSafe/iterTermSafe
+would preserve existing types and public target ids, but would leave the known
+unsafe definitions inside the mission's foundational dependency. It would be an
+alternative API, not a replacement of the defective functions. For the requested
+clean corrected submission, full replacement is easier to review and communicate.
+Do not reuse the old declaration namespace and create import conflicts.
+
+Use the same proposal after withdrawal, not a second mission for the same paper.
+Read back the new draft content, then update its item order, main goal, and three
+milestone links. Remove old proposal references only after the new dependency
+chain is in place and verified. Preserve the saved before-review snapshot.
+Deprecating old published artifacts is a distinct persistent change; do it only
+with an appropriate replacement map and session authorization.
+
+Review scope after implementation
+
+Run a focused independent source comparison of the changed helper definitions
+and a normalized diff of all four theorem statements. Run fresh blind readbacks
+against the new final artifacts because their imported definition identity has
+changed. Since the safe concrete combinators are unchanged, there is no reason
+to alter the core definability theorem, subterm grammar, positivity assumptions,
+alpha-equivalence semantics, or the numeral-one eta-short exception.
+
+Communicate the result as a checked correction of a known helper defect. Even
+after it passes these checks, the four research theorems remain open, and absence
+of further findings in two reviews does not establish that the whole package is
+perfect, fully proved, or formally proved faithful to the paper.

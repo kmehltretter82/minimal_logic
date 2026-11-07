@@ -1,0 +1,88 @@
+Extended polynomials mission — audit of submitted snapshot, 2026-11-02
+
+Verdict: no blocking defect found in the four theorem targets in this review.
+A real variable-capture defect exists in two general-purpose helper functions,
+but the explicit combinator calls used by the submitted targets avoid it.
+This is a source/statement review, not a proof of the four open targets.
+
+Proposal: https://prove2.me/my-missions/059a0f02-b778-44fd-9e95-ec7cbdba9cbc
+Primary source: https://epub.ub.uni-muenchen.de/4273/1/10.pdf
+Both scanned pages 113–114 were inspected visually (page-1.png, page-2.png).
+The snapshot contains one definition item and four open theorem items; the UI's
+“5 thms” count includes the definition. All five compile on the pinned environment.
+
+EP-1 — Medium: composition and iteration helpers need a fresh-binder contract.
+Item: Schwichtenberg1976_Lambda
+Published definition ID: 1b8fdb07-70ed-450d-a3a9-1ff2a939563f
+Locations: code/00_Schwichtenberg1976_Lambda.lean:231–245
+
+compTerm accepts arbitrary terms t,s, then binds the supplied/default variable
+without checking that it is fresh for t and s. Take x=(2,0), y=(3,0),
+t=λy.x and s=λy.y. Both inputs have type 0→0. The default compTerm uses x as
+its binder, so the intended free x becomes bound. The result has no free variables;
+using genuinely fresh binder 4 instead preserves free x. iterTerm has the same
+problem when its arbitrary endomorphism argument contains its chosen binder free.
+
+UtilityCapture.lean proves these facts with kernel checking and no axioms. It
+imports only the submitted definition, not any open target. The composition
+counterexample is not a disproof of combinators_and_sufficiency: addComb, mulComb,
+and constComb use safe binder/type combinations. The main characterization can
+therefore still hold despite this general-purpose helper defect.
+
+Repair: compute a fresh id above all variables of the inputs, or explicitly
+require freshness at every general-purpose use. If retaining raw constructors,
+rename/document them as such and prove the semantic composition/iteration lemmas
+under explicit freshness hypotheses. A definition body change requires a replacement
+published item and updated imports; documentation-only qualification may suffice
+if all current safe specializations are deliberately retained.
+
+Coverage and source correspondence:
+
+1. Syntax, substitution, alpha/beta relations, numeral representation, definitions
+   of polynomial/extended polynomial/piecewise polynomial, and subterm grammar:
+   inspected in full. Typed variables are (id,type) pairs, so equal numeric ids at
+   different types do not collide. Capture-avoiding substitution chooses ids above
+   the body, substituted term, and target variable. Sequential substMany is safe
+   in the target lemma because the substituted Church numerals are closed and Fs
+   is injective. No opaque axiom or hidden main conclusion occurs in these classes.
+
+2. combinators_and_sufficiency (4694e83f-7878-4185-8cdf-964a0d906b8a):
+   Covers the four displayed source combinators and closure under composition.
+   The numeral normal-form classification explicitly allows λalpha.alpha, which
+   the paper's informal sentence overlooks under beta-only equality. This is an
+   appropriate correction: it is beta-normal and eta-equivalent to numeral one,
+   but is not alpha-equivalent to the expanded Church numeral. Do not remove this
+   exception without changing the equality convention.
+
+3. normal_subterm_structure (aadc9a8e-5141-4915-b574-db398c5d5716):
+   Source p114 analyzes the binary case; the submitted k-variable generalization
+   retains its type/free-variable hypotheses and matches clauses (1)–(3).
+   The free-variable hypotheses are needed and are present. Bound ground-type
+   variables in subterms are permitted by the grammar.
+
+4. subterm_polynomial_lemma (8057498b-8e0a-4096-bdd4-ec2e8be75632):
+   Positivity and distinct Fs are explicit. The exceptional alpha case accounts
+   for beta-only reduction instead of silently eta-expanding alpha. The fixed
+   terminal ground variable may be the bound variable or a free variable of s.
+   No counterexample or lost source hypothesis was found in this review.
+
+5. definable_iff_extended_polynomial (d41263bd-5699-47e6-9aea-b2d2af7f2deb):
+   The headline is a genuine equivalence between independently defined syntactic
+   definability and the two polynomial classes. It does not assume the desired
+   characterization. Arity zero is meaningful and gives constants. Definition
+   uses reduction to the expanded numeral; for this existence-of-a-representing-
+   term characterization the numeral-one eta-short exception can be handled by
+   choosing an expanded representative. The source's binary argument is generalized
+   to k arguments, as the mission explicitly states.
+
+Published natural-language item statements agree with the corresponding Lean
+statements substantially better than in the other audited missions. No stale
+unrelated calculus descriptions were found here. The historical discussion in
+mission prose is not part of the mathematical certification and was not audited
+as a comprehensive bibliography.
+
+Verification:
+- All five exact snapshot modules compile, with intentional sorry warnings on
+  open targets. Compilation does not establish truth.
+- UtilityCapture.lean: five proved audit facts, no sorry and no axioms.
+- The four open research target statements remain unproved by this review.

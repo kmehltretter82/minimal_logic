@@ -1,0 +1,118 @@
+Review of five Prove2Me mission submissions — 2026-11-02
+
+Four submissions contain a formally false statement. The extended-polynomials
+submission has a smaller helper-function issue; no blocking theorem defect was
+found in two independent source/semantic passes. These verdicts concern the
+submitted formalizations, not the validity of the papers' intended results.
+
+You reported withdrawing Higher Type Recursion, Inverse Evaluation, and
+Arithmetic NSI. The later completed counterexample also warrants withdrawing
+Syntactical NSI. The audit itself made no remote modifications.
+
+MISSION VERDICTS
+
+1. Higher Type Recursion, Ramification and Polynomial Time — BLOCKER.
+   https://prove2.me/my-missions/d6a320af-caf0-4032-a7cc-7d494a9539b2
+   Theorem4.3/Corollary4.4 is false: (!!0) kappa kappa is a valid closed,
+   recursion-free ground term, reduces to zero, but the formal evaluator cannot
+   evaluate it. Counterexample.lean proves the negation of the exact statement.
+   The same file proves that TermEquiv is not transitive because literal binder
+   names depend on reduction order. Cost of constructing a recursion-free term
+   is missing from the advertised complexity milestones. Several descriptions
+   describe different claims from their Lean signatures.
+   Full findings, item IDs and repairs: higher_type/report.txt.
+
+2. An Inverse of the Evaluation Functional for Typed Lambda-Calculus — BLOCKER.
+   https://prove2.me/my-missions/15e6e856-ad83-4ad8-8d88-f7cfdc7f058e
+   Extraction can capture an originally free variable. SyntaxAudit.lean refutes
+   exact Lemma2 and Theorem1's assertion under its supplied model/functionals.
+   The final completeness target also assumes extra closure and inversion data
+   that the source constructs, and the model definition admits empty environments
+   with vacuous semantic equality. EmptyEnvironmentAudit.lean certifies that gap.
+   Full findings, item IDs and repairs: inverse_evaluation/report.txt.
+
+3. An Arithmetic for Non-Size-Increasing Polynomial-Time Computation — BLOCKER.
+   https://prove2.me/my-missions/c900846e-090f-48cb-99cd-869a4ce1bf09
+   Theorem4.7 is false: axiom16 extracts an identity lacking the required U
+   argument. Axiom16Audit.lean proves the exact theorem's negation. A separate
+   closed typed iterator cleans to a term with no weak type (CleanIteratorAudit).
+   An exact additive bound on syntactic length confuses token preservation with
+   type-dependent encoding size; the independent review gives the counterexample
+   family and identifies exactly which parts are kernel-certified. All11 item
+   natural-language descriptions conflict with their current formal content.
+   Full findings: arithmetic_nsi/report.txt and independent-review.txt.
+
+4. A Syntactical Analysis of Non-Size-Increasing Polynomial Time Computation
+   — BLOCKER, discovered after the first three withdrawal recommendations.
+   https://prove2.me/my-missions/7af10cd8-5e9e-4347-a4cf-2232bd15d007
+   Corollary4.4 is false for unrestricted element types: a valid program maps a
+   singleton nested list to two outer entries, using the original two tokens.
+   counterexample.lean proves the exact universally quantified statement false,
+   including typing, canonical input, all11 reduction steps, and normal output.
+   Restrict the element type suitably or measure total resources, not outer
+   length. The binary-list main target is not refuted by this counterexample.
+   All10 item descriptions conflict with the actual code.
+   Full findings, item IDs and repairs: syntactical_nsi/report.txt.
+
+5. Definable Functions in the Simply Typed Lambda-Calculus (Extended Polynomials
+   Theorem) — NO BLOCKING THEOREM ERROR FOUND; HELPER FIX/QUALIFICATION NEEDED.
+   https://prove2.me/my-missions/059a0f02-b778-44fd-9e95-ec7cbdba9cbc
+   Generic compTerm/iterTerm can capture a free variable because their binder is
+   not required to be fresh. UtilityCapture.lean certifies this without axioms.
+   The concrete combinator calls used by the four submitted targets avoid this
+   problem. No false target was found. This is the strongest of the five packages
+   in this review, not a claim that its four open theorems are proved.
+   Full report: extended_polynomials/report.txt; independent second-pass.txt.
+
+WHAT WAS VERIFIED
+
+- Exact before-review API snapshots preserved for all5 proposals, with SHA256.
+- Every item reviewed:44 uploaded modules, consisting of10 definition modules
+  and34 open theorem targets. The UI count includes definitions.
+- All44 exact module bodies compile on Lean4.33.1, Mathlib environment
+  0df444a360eaa60ab8c11dca51a86af692955474. See compilation.log.
+- All44 compilation copies were compared byte-for-byte with snapshot bodies;
+  all5 snapshot digests still match. Open targets intentionally contain sorry.
+- The counterexample proofs use only the relevant definition modules, never
+  import an open target, and have no sorry/custom axiom/native_decide dependence.
+  Printed axioms are subsets of propext, Classical.choice, Quot.sound (or empty).
+- Full source comparisons and per-item dispositions are in each mission's report.
+  Papers/preprints are identified with precise URLs and pagination caveats.
+- Unaffected open targets have not been proved by this audit. A compilation pass
+  is a syntactic check; source review and kernel counterexamples supply different
+  evidence. Individual reports distinguish full refutations from utility defects,
+  mathematical arguments, weaker-than-source statements, and unresolved gaps.
+
+REPAIR ORDER BEFORE RESUBMISSION
+
+First repair the foundational definitions: complete evaluator spines and alpha
+semantics (higher type), capture-free extraction and valid model environments
+(inverse), and typed extraction/cleaning (arithmetic). Then replace false targets
+and repair missing cost/size hypotheses. Rewrite stale natural-language item and
+milestone descriptions to match the final formal content. Finally regenerate
+independent readbacks and recheck the complete dependency chain.
+
+These proposals contain already-published reference items. Withdrawal makes the
+proposal editable but does not make published Lean bodies mutable. Corrected
+bodies require replacement definitions/theorems, updated imports, and relinked
+milestones/main goals. This review has not created replacements or resubmitted.
+
+REPRODUCTION / CONTENTS
+
+check_lean.py without arguments checks all44 exact snapshot modules in dependency
+order. Passing certificate paths checks those against the same isolated compiled
+definitions. It uses the existing pinned toolchain/cache and never rebuilds the
+shared Mathlib checkout. Certificate locations:
+  higher_type/Counterexample.lean
+  inverse_evaluation/SyntaxAudit.lean
+  inverse_evaluation/EmptyEnvironmentAudit.lean
+  arithmetic_nsi/Axiom16Audit.lean
+  arithmetic_nsi/CleanIteratorAudit.lean
+  arithmetic_nsi/SizeMeasureAudit.lean
+  syntactical_nsi/counterexample.lean
+  extended_polynomials/UtilityCapture.lean
+
+review-bundle.zip contains reports, snapshots, exact submitted code, audit proof
+sources, runner, and available logs. Downloaded full papers and compiled binaries
+are excluded; reports link to the primary sources. Temporary API credential files
+were deleted, and no credentials are included in the bundle.
