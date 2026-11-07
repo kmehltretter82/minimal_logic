@@ -23,7 +23,7 @@ We aim for constructive proofs: no `Classical.choice`, only `propext` and `Quot.
 | Paper | Lean namespace | State |
 |---|---|---|
 | Berger, Buchholz & Schwichtenberg 2002, *Refined program extraction from classical proofs* | `BBS2002`, `BBS2002.V2` | **Proved.** All six milestones and the main goal (Corollary 5.3) have accepted proofs. See the [prove2.me mission](https://prove2.me/missions/Refined_Program_Extraction_from_Classical_Proofs). |
-| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | **Proved, constructively.** All four statements, including the main theorem, are proved in [`Proofs/Schwichtenberg1976V2`](Proofs/Schwichtenberg1976V2) and depend only on `propext` and `Quot.sound`. V2 fixes variable capture in two helper functions. Its proposal went into prove2.me review on 2026-11-02, before the rule above. |
+| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | **Proved, constructively.** All four statements, including the main theorem, are proved in [`Proofs/Schwichtenberg1976V2`](Proofs/Schwichtenberg1976V2) and depend only on `propext` and `Quot.sound`. The proofs were accepted on prove2.me on 2026-11-07. V2 fixes variable capture in two helper functions. Its proposal went into prove2.me review on 2026-11-02, before the rule above. |
 | Aehlig & Schwichtenberg 2002, *A syntactical analysis of non-size-increasing polynomial time computation* | `AehligSchwichtenberg2002` | **Contains a false statement** (Corollary 4.4). Statements only. |
 | Aehlig, Berger, Hofmann & Schwichtenberg 2004, *An arithmetic for non-size-increasing polynomial-time computation* | `ABHS2004` | **Contains a false statement** (Theorem 4.7) and defective definitions. Statements only. |
 | Berger & Schwichtenberg 1991, *An inverse of the evaluation functional for typed λ-calculus* | `BergerSchwichtenberg1991` | **Contains false statements** (Lemma 2 and part of Theorem 1) and defective definitions. Statements only. |
@@ -91,9 +91,9 @@ The layout follows prove2.me, so every file matches the published item exactly.
 |---|---|
 | `Definitions/` | Published definition modules, with no `sorry` |
 | `Theorems/` | Published statements. Each is a single theorem ending in `sorry` |
-| `Solutions/` | Accepted prove2.me proofs for BBS2002. Each ends in `theorem solution` with the exact target type |
+| `Solutions/` | Accepted prove2.me proofs. Each is one file ending in `theorem solution` with the exact target type. The BBS2002 files are downloaded from prove2.me; the Schwichtenberg 1976 files are generated from `Proofs/` by `scripts/package_solutions.py` |
 | `Proofs/` | Proofs developed in this repository, as ordinary Lean modules (currently Schwichtenberg 1976) |
-| `scripts/` | `ClassicalAudit.lean`: lists declarations that use `Classical.choice` |
+| `scripts/` | `ClassicalAudit.lean` lists declarations that use `Classical.choice`; `package_solutions.py` builds single-file prove2.me solutions from `Proofs/` |
 | `Audits/` | Lean counterexamples and checks from the audits |
 | `docs/` | Audit reports, the BBS2002 V2 source audit, proof explanations, and [`prove2me-items.json`](docs/prove2me-items.json), which maps each file to its prove2.me ID |
 
