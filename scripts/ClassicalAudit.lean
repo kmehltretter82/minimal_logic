@@ -1,4 +1,5 @@
 import Proofs.Schwichtenberg1976V2.Sufficiency
+import Proofs.Schwichtenberg1976V2.Piecewise
 import Proofs.Schwichtenberg1976V2.SubtermPolynomial
 import Lean
 
