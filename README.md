@@ -61,6 +61,10 @@ Each defect listed here was found in the audit of 2026-11-02. The full reports a
 **Aehlig & Schwichtenberg 2002** ([report](docs/audits/2026-11-02/syntactical_nsi-report.txt))
 - `corollary_4_4` is false when the elements are themselves lists. A valid program turns a one-entry list into a two-entry list. Proof of the negation: `Audits/AehligSchwichtenberg2002_Corollary44.lean`.
 - The planned repair restricts the corollary to `τ = B`, as the paper's text does.
+- `lemma_3_4` (substitution) and `lemma_3_5` (subject reduction) are false. They were found on 2026-11-07 and are proved false in `Audits/AehligSchwichtenberg2002_SubstitutionClash.lean`.
+  - When `substTerm` renames a binder, it chooses the new name without looking at enclosing binders. In a tensor elimination `t (λa. λb. r)` the renamed `b` can therefore become `a`, and the rule `(⊗⁻)` rejects equal binders.
+  - The β-redex `(λx. p (λa. λb. b)) b` is typed but reduces to the untypable `p (λa. λa. a)`.
+  - The repair has to change the definition of substitution.
 - The prove2.me descriptions of all ten items do not match the Lean code.
 
 **ABHS 2004** ([report](docs/audits/2026-11-02/arithmetic_nsi-report.txt))
