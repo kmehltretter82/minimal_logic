@@ -13,16 +13,17 @@ Only then does it go to prove2.me as a mission for public review, because by the
 
 The six papers below began as prove2.me missions, before this rule:
 
-- One paper is finished: fully formalized and proved.
-- One has corrected statements, but its theorems are not proved yet.
+- Two papers are finished: fully formalized and proved.
 - The other four contain statements that we know are false. They are kept here as published and will be fixed here.
+
+We aim for constructive proofs: no `Classical.choice`, only `propext` and `Quot.sound`. `scripts/ClassicalAudit.lean` lists any declaration that uses `Classical.choice`.
 
 ## Status
 
 | Paper | Lean namespace | State |
 |---|---|---|
 | Berger, Buchholz & Schwichtenberg 2002, *Refined program extraction from classical proofs* | `BBS2002`, `BBS2002.V2` | **Proved.** All six milestones and the main goal (Corollary 5.3) have accepted proofs. See the [prove2.me mission](https://prove2.me/missions/Refined_Program_Extraction_from_Classical_Proofs). |
-| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | Statements only, with 4 open theorems. V2 fixes variable capture in two helper functions. Its proposal went into prove2.me review on 2026-11-02, before the rule above. |
+| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | **Proved, constructively.** All four statements, including the main theorem, are proved in [`Proofs/Schwichtenberg1976V2`](Proofs/Schwichtenberg1976V2) and depend only on `propext` and `Quot.sound`. V2 fixes variable capture in two helper functions. Its proposal went into prove2.me review on 2026-11-02, before the rule above. |
 | Aehlig & Schwichtenberg 2002, *A syntactical analysis of non-size-increasing polynomial time computation* | `AehligSchwichtenberg2002` | **Contains a false statement** (Corollary 4.4). Statements only. |
 | Aehlig, Berger, Hofmann & Schwichtenberg 2004, *An arithmetic for non-size-increasing polynomial-time computation* | `ABHS2004` | **Contains a false statement** (Theorem 4.7) and defective definitions. Statements only. |
 | Berger & Schwichtenberg 1991, *An inverse of the evaluation functional for typed λ-calculus* | `BergerSchwichtenberg1991` | **Contains false statements** (Lemma 2 and part of Theorem 1) and defective definitions. Statements only. |
@@ -35,7 +36,23 @@ These defects are in our formalizations, not in the papers. In two places, thoug
 
 None of the four papers marked as containing false statements should be built on until it is repaired.
 
-Planned order: Aehlig & Schwichtenberg 2002, which needs the smallest repair, then ABHS 2004, Berger & Schwichtenberg 1991, and BNS 2000. The four open theorems of Schwichtenberg 1976 also still need proofs.
+Planned order: Aehlig & Schwichtenberg 2002, which needs the smallest repair, then ABHS 2004, Berger & Schwichtenberg 1991, and BNS 2000.
+
+## How the 1976 theorem is proved
+
+The proofs for Schwichtenberg 1976 are in [`Proofs/Schwichtenberg1976V2`](Proofs/Schwichtenberg1976V2).
+
+- **λ-definable ⇒ piecewise polynomial** (`Necessity.lean`). The paper takes the normal form of `t F₁ … Fₖ α` and analyses its subterms. Instead, we:
+  - interpret terms in sets (`Semantics.lean`);
+  - prove that reduction preserves meaning, including capture-avoiding substitution;
+  - show with a Kripke logical relation that a closed term applied to numerals with a fixed zero pattern computes a polynomial.
+
+  This needs neither normalization nor confluence. The relation's key lemma mirrors the paper: a definable map of type `0 → 0` is a translation `x ↦ Q(v) + x` or a constant.
+- **Paper milestones.** The normal-form subterm analysis of p. 114 is proved as stated (`NormalSubterms.lean`, `SubtermPolynomial.lean`).
+- **Extended polynomial ⇒ λ-definable.** This is composition with the combinators of p. 113 (`Combinators.lean`, `Sufficiency.lean`).
+- **Piecewise ⇔ extended.** This is a cascade of conditionals over the argument positions (`Piecewise.lean`).
+
+`StatementCheck.lean` assigns each proof to the type of the published prove2.me statement, so the two cannot drift apart.
 
 ## Known defects
 
@@ -75,6 +92,8 @@ The layout follows prove2.me, so every file matches the published item exactly.
 | `Definitions/` | Published definition modules, with no `sorry` |
 | `Theorems/` | Published statements. Each is a single theorem ending in `sorry` |
 | `Solutions/` | Accepted prove2.me proofs for BBS2002. Each ends in `theorem solution` with the exact target type |
+| `Proofs/` | Proofs developed in this repository, as ordinary Lean modules (currently Schwichtenberg 1976) |
+| `scripts/` | `ClassicalAudit.lean`: lists declarations that use `Classical.choice` |
 | `Audits/` | Lean counterexamples and checks from the audits |
 | `docs/` | Audit reports, the BBS2002 V2 source audit, proof explanations, and [`prove2me-items.json`](docs/prove2me-items.json), which maps each file to its prove2.me ID |
 
@@ -86,10 +105,11 @@ The project needs Lean `v4.33.1` and Mathlib `0df444a`, both pinned in `lean-too
 
 ```sh
 lake exe cache get
-lake build Definitions Theorems Solutions Audits
+lake build Definitions Theorems Solutions Audits Proofs
+lake env lean scripts/ClassicalAudit.lean
 ```
 
-On 2026-11-07 this build passed (168 jobs). The only `sorry`s are in the 41 statement files in `Theorems/`: 34 open targets, plus the 7 BBS2002 statements whose proofs are in `Solutions/`.
+On 2026-11-07 this build passed (180 jobs). The only `sorry`s are in the 41 statement files in `Theorems/`: 34 open targets, plus the 7 BBS2002 statements whose proofs are in `Solutions/`.
 
 As on prove2.me, a proof may cite another target by importing its statement from `Theorems/`. The axioms of each `solution` are:
 

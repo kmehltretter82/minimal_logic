@@ -4,6 +4,8 @@ import Theorems.Thm_Schwichtenberg1976V2_subterm_polynomial_lemma
 import Proofs.Schwichtenberg1976V2.SubtermPolynomial
 import Theorems.Thm_Schwichtenberg1976V2_combinators_and_sufficiency
 import Proofs.Schwichtenberg1976V2.Sufficiency
+import Theorems.Thm_Schwichtenberg1976V2_definable_iff_extended_polynomial
+import Proofs.Schwichtenberg1976V2.MainTheorem
 
 /-!
 # The proofs prove exactly the published statements
@@ -20,3 +22,6 @@ example : type_of% @Schwichtenberg1976V2.subterm_polynomial_lemma :=
 
 example : type_of% @Schwichtenberg1976V2.combinators_and_sufficiency :=
   @Schwichtenberg1976V2.Proofs.combinators_and_sufficiency
+
+example : type_of% @Schwichtenberg1976V2.definable_iff_extended_polynomial :=
+  @Schwichtenberg1976V2.Proofs.definable_iff_extended_polynomial

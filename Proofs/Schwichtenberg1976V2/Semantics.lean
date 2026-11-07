@@ -17,7 +17,7 @@ open Schwichtenberg1976V2
 
 /-! ## Denotations -/
 
-def Sem : Ty → Type
+@[reducible] def Sem : Ty → Type
   | .zero => Nat
   | .arr a b => Sem a → Sem b
 

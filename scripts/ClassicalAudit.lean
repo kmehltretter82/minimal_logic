@@ -1,6 +1,7 @@
 import Proofs.Schwichtenberg1976V2.Sufficiency
 import Proofs.Schwichtenberg1976V2.Piecewise
 import Proofs.Schwichtenberg1976V2.Semantics
+import Proofs.Schwichtenberg1976V2.MainTheorem
 import Proofs.Schwichtenberg1976V2.SubtermPolynomial
 import Lean
 
@@ -23,3 +24,8 @@ open Lean Elab Command
     if axs.contains ``Classical.choice then
       bad := bad.push n
   logInfo m!"{names.size} declarations, {bad.size} use Classical.choice:\n{bad.qsort Name.lt}"
+  for n in [``Schwichtenberg1976V2.Proofs.combinators_and_sufficiency,
+      ``Schwichtenberg1976V2.Proofs.normal_subterm_structure,
+      ``Schwichtenberg1976V2.Proofs.subterm_polynomial_lemma,
+      ``Schwichtenberg1976V2.Proofs.definable_iff_extended_polynomial] do
+    logInfo m!"{n}: {← liftCoreM (collectAxioms n)}"
