@@ -1,17 +1,28 @@
 # minimal_logic
 
-This repository holds Lean 4 formalizations of six papers by Helmut Schwichtenberg and his coauthors, written for [prove2.me](https://prove2.me) missions.
+This repository holds Lean 4 formalizations of papers by Helmut Schwichtenberg and his coauthors. The goal is to formalize and fully prove all of them here, starting with the six papers below.
 
-- One paper is fully formalized and proved.
-- One has corrected statements waiting for prove2.me review.
-- The other four contain statements that we know are false. They are published here unchanged and will be fixed later.
+## How we work
+
+We finish each paper in this repository before opening a public review on [prove2.me](https://prove2.me). A paper is finished when:
+
+1. its definitions and statements have been checked against the paper, and no counterexample to any of them is known; and
+2. every statement, including the main theorem, is proved here without `sorry`.
+
+Only then does it go to prove2.me as a mission for public review, because by then we know the formalization is correct and can be proved. Fixes and new proofs are made here first.
+
+The six papers below began as prove2.me missions, before this rule:
+
+- One paper is finished: fully formalized and proved.
+- One has corrected statements, but its theorems are not proved yet.
+- The other four contain statements that we know are false. They are kept here as published and will be fixed here.
 
 ## Status
 
 | Paper | Lean namespace | State |
 |---|---|---|
 | Berger, Buchholz & Schwichtenberg 2002, *Refined program extraction from classical proofs* | `BBS2002`, `BBS2002.V2` | **Proved.** All six milestones and the main goal (Corollary 5.3) have accepted proofs. See the [prove2.me mission](https://prove2.me/missions/Refined_Program_Extraction_from_Classical_Proofs). |
-| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | Statements only, with 4 open theorems. V2 fixes variable capture in two helper functions. In prove2.me review since 2026-11-02. |
+| Schwichtenberg 1976, *Definierbare Funktionen im λ-Kalkül mit Typen* | `Schwichtenberg1976V2` | Statements only, with 4 open theorems. V2 fixes variable capture in two helper functions. Its proposal went into prove2.me review on 2026-11-02, before the rule above. |
 | Aehlig & Schwichtenberg 2002, *A syntactical analysis of non-size-increasing polynomial time computation* | `AehligSchwichtenberg2002` | **Contains a false statement** (Corollary 4.4). Statements only. |
 | Aehlig, Berger, Hofmann & Schwichtenberg 2004, *An arithmetic for non-size-increasing polynomial-time computation* | `ABHS2004` | **Contains a false statement** (Theorem 4.7) and defective definitions. Statements only. |
 | Berger & Schwichtenberg 1991, *An inverse of the evaluation functional for typed λ-calculus* | `BergerSchwichtenberg1991` | **Contains false statements** (Lemma 2 and part of Theorem 1) and defective definitions. Statements only. |
@@ -23,6 +34,8 @@ These defects are in our formalizations, not in the papers. In two places, thoug
 - ABHS 2004 writes the realizer of axiom 16 as `id_ρ`. Read literally, that term has the wrong type.
 
 None of the four papers marked as containing false statements should be built on until it is repaired.
+
+Planned order: Aehlig & Schwichtenberg 2002, which needs the smallest repair, then ABHS 2004, Berger & Schwichtenberg 1991, and BNS 2000. The four open theorems of Schwichtenberg 1976 also still need proofs.
 
 ## Known defects
 
@@ -65,7 +78,7 @@ The layout follows prove2.me, so every file matches the published item exactly.
 | `Audits/` | Lean counterexamples and checks from the audits |
 | `docs/` | Audit reports, the BBS2002 V2 source audit, proof explanations, and [`prove2me-items.json`](docs/prove2me-items.json), which maps each file to its prove2.me ID |
 
-The files were downloaded from prove2.me on 2026-11-07. The original BBS2002 statements of Theorems 4.1, 5.1, 5.2 and Corollary 5.3 are deprecated on prove2.me and are not included. Their V2 replacements are included. Likewise, Schwichtenberg 1976 V1 has been replaced by V2.
+The files were downloaded from prove2.me on 2026-11-07. From now on this repository is the source of truth, and prove2.me is updated only when a paper is finished. The original BBS2002 statements of Theorems 4.1, 5.1, 5.2 and Corollary 5.3 are deprecated on prove2.me and are not included. Their V2 replacements are included. Likewise, Schwichtenberg 1976 V1 has been replaced by V2.
 
 ## Building
 
